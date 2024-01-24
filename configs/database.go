@@ -11,7 +11,7 @@ var DB *gorm.DB
 
 func ConnectToDB() {
 	var err error
-	dsn := "sqlserver://prueba:prueba@127.0.0.1?database=PendaAsesys"
+	dsn := "sqlserver://Sistema:@@sistema@192.168.0.108:1433?database=PendaAsesys"
 	DB, err = gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
 
 	if err != nil {

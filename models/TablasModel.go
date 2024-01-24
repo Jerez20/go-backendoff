@@ -174,9 +174,9 @@ func GetTransaccionesVentas(startDate, endDate time.Time) ([]Transa01, error) {
 	var transactions []Transa01
 	for rows.Next() {
 		var transaction Transa01
-		err := rows.Scan(&transaction.AntDocumento, &transaction.Fecha, &transaction.Dia /* ... otras columnas ... */)
-		if err != nil {
+		if err := rows.Scan(&transaction); err != nil {
 			return nil, err
+
 		}
 		transactions = append(transactions, transaction)
 	}
