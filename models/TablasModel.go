@@ -165,7 +165,7 @@ func GetTransaccionesVentas(startDate, endDate time.Time) ([]Transa01, error) {
 	configs.ConnectToDB()
 	defer configs.CloseDB()
 
-	rows, err := configs.DB.Raw("SELECT * FROM TRANSA01 WHERE FECHA BETWEEN ? AND ?", startDate, endDate).Rows()
+	rows, err := configs.DB.Raw("SELECT * FROM Transa01 WHERE Fecha BETWEEN ? AND ?", startDate, endDate).Rows()
 	if err != nil {
 		return nil, err
 	}
@@ -174,21 +174,21 @@ func GetTransaccionesVentas(startDate, endDate time.Time) ([]Transa01, error) {
 	var transactions []Transa01
 	for rows.Next() {
 		var transaction Transa01
-		if err := rows.Scan(&transaction); err != nil {
-			return nil, err
+		if err := rows.Scan(&transaction.Empresa, &transaction.Fecha, &transaction.Tipo, &transaction.Numero, &transaction.Documento, &transaction.Documento1, &transaction.Turno1, &transaction.Ncf, &transaction.Cliente, &transaction.Suplidor, &transaction.Termino, &transaction.Dia, &transaction.Dia1, &transaction.Vence, &transaction.Digitado, &transaction.Itbis, &transaction.Fechadesc, &transaction.Otros, &transaction.Flete, &transaction.Descuen, &transaction.Nograva, &transaction.Grava, &transaction.Monto, &transaction.Total, &transaction.Balance, &transaction.Nombre, &transaction.Vendedor, &transaction.Vendedor1, &transaction.Venname, &transaction.Zona, &transaction.Pedido, &transaction.Conduce, &transaction.Observa, &transaction.Validado, &transaction.Posteado, &transaction.Efectivo, &transaction.Cheque, &transaction.Tarjeta, &transaction.Gastos, &transaction.Nulo, &transaction.ABIERTO, &transaction.ENVIADO, &transaction.Despacho, &transaction.Provincia, &transaction.Almacen, &transaction.POSTEO, &transaction.Socio, &transaction.Creado, &transaction.Dsc, &transaction.Prnc, &transaction.Prn, &transaction.Observa1, &transaction.Usuario, &transaction.Chofer, &transaction.Promotor, &transaction.Cajero, &transaction.Descrip1, &transaction.Descrip2, &transaction.Turno, &transaction.Almacen1, &transaction.Fecham, &transaction.Fechavalidado, &transaction.Dire, &transaction.Ciudad, &transaction.Tele, &transaction.Tasa1, &transaction.Masitbis, &transaction.Cedula, &transaction.Comision, &transaction.Ncf1, &transaction.Egreso, &transaction.Factor, &transaction.Procesar, &transaction.Observa2, &transaction.Anulado, &transaction.Conduce2, &transaction.Conduce3, &transaction.Conduce4, &transaction.Lectura1, &transaction.Lectura2, &transaction.Lectura3, &transaction.Ncftipo, &transaction.Generancf, &transaction.Diferencia, &transaction.Devolucion, &transaction.Modificado, &transaction.Devuelta, &transaction.Tcredito, &transaction.Sucursal1, &transaction.Cnttransa, &transaction.Fechancf, &transaction.Contacto, &transaction.Idsucursal, &transaction.Tasa, &transaction.Clasifica2, &transaction.E_ncfcode, &transaction.Transferencia, &transaction.Notacredito, &transaction.Notacredito1, &transaction.NivelPrecio, &transaction.Itbisencosto, &transaction.Reimpresion, &transaction.FactTmp, &transaction.AntDocumento, &transaction.Arancel, &transaction.Gasto1, &transaction.Autorizado /*... otros campos ...*/); err != nil {
+			return nil, fmt.Errorf("error al escanear filas: %w", err)
 
 		}
 		transactions = append(transactions, transaction)
 	}
 
 	if len(transactions) == 0 {
-		return nil, errors.New("no transaciones valida en esta fecha")
+		return nil, errors.New("no hay transacciones válidas en esta fecha")
 	}
 
 	return transactions, nil
 }
 
-func Main() {
+/*func Main() {
 	startDate := time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC)
 	endDate := time.Date(2021, 12, 31, 0, 0, 0, 0, time.UTC)
 
@@ -199,4 +199,4 @@ func Main() {
 	}
 
 	fmt.Println("Transacciones de ventas:", transactions)
-}
+}*/

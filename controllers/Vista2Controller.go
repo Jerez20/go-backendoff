@@ -127,15 +127,17 @@ func Transaget(c *gin.Context) {
 
 // transaciones model query 1
 func GetTransaccionesVentas(c *gin.Context) {
-	startDate, err := time.Parse("20060102", c.Query("start_date"))
+	textValue := c.Query("start_date")
+	startDate, err := time.Parse("20060102", textValue)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Formato de fecha no válido"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error al parsear la fecha de inicio: " + err.Error()})
 		return
 	}
 
-	endDate, err := time.Parse("20060102", c.Query("end_date"))
+	textValue = c.Query("end_date")
+	endDate, err := time.Parse("20060102", textValue)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Formato de fecha no válido"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error al parsear la fecha de fin: " + err.Error()})
 		return
 	}
 
